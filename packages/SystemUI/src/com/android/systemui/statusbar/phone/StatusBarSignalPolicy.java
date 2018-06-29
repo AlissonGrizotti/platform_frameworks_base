@@ -427,8 +427,9 @@ public class StatusBarSignalPolicy implements NetworkControllerImpl.SignalCallba
         public boolean needsLeadingPadding;
         public boolean provisioned;
         public String typeContentDescription;
+        private boolean mProvisioned = true;
+	public Context mContext;
         public int volteId;
-        public Context context;
 
         private MobileIconState(int subId, Context context) {
             super();
@@ -481,6 +482,8 @@ public class StatusBarSignalPolicy implements NetworkControllerImpl.SignalCallba
             other.roaming = roaming;
             other.needsLeadingPadding = needsLeadingPadding;
             other.typeContentDescription = typeContentDescription;
+
+	    other.mContext = mContext;
             other.volteId = volteId;
         }
 

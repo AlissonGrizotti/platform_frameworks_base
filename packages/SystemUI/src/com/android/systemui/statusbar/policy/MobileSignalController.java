@@ -17,6 +17,7 @@ package com.android.systemui.statusbar.policy;
 
 import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -91,6 +92,9 @@ public class MobileSignalController extends SignalController<
     private boolean mVoLTEicon;
 
     private ImsManager mImsManager;
+
+    private ImsManager mImsManager;
+
 
     // TODO: Reduce number of vars passed in, if we have the NetworkController, probably don't
     // need listener lists anymore.
@@ -238,13 +242,14 @@ public class MobileSignalController extends SignalController<
         mContext.getContentResolver().registerContentObserver(Global.getUriFor(
                 Global.MOBILE_DATA + mSubscriptionInfo.getSubscriptionId()),
                 true, mObserver);
-       try {
-           mImsManager.addRegistrationCallback(mImsRegistrationCallback);
-       }catch(ImsException e){
-           Log.d(mTag, "exception:" + e);
-       }
-       mContext.registerReceiver(mVolteSwitchObserver,
-           new IntentFilter("org.codeaurora.intent.action.ACTION_ENHANCE_4G_SWITCH"));
+
+        try {
+            mImsManager.addRegistrationCallback(mImsRegistrationCallback);
+        }catch(ImsException e){
+            Log.d(mTag, "exception:" + e);
+        }
+        mContext.registerReceiver(mVolteSwitchObserver,
+                new IntentFilter("org.codeaurora.intent.action.ACTION_ENHANCE_4G_SWITCH"));
     }
 
     /**
@@ -373,7 +378,7 @@ public class MobileSignalController extends SignalController<
     private int getVolteResId() {
         int resId = 0;
 
-        if ( mCurrentState.imsResitered && mVoLTEicon ) {
+        if ( mCurrentState.imsResitered ) {
             resId = R.drawable.ic_volte;
         }
         return resId;
