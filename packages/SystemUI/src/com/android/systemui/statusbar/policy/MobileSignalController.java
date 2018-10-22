@@ -159,6 +159,9 @@ public class MobileSignalController extends SignalController<
             resolver.registerContentObserver(
                     Settings.System.getUriFor(Settings.System.SHOW_VOLTE_ICON), false,
                     this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(
+                    Settings.System.getUriFor(Settings.System.SHOW_VOLTE_ICON), false,
+                    this, UserHandle.USER_ALL);
             updateSettings();
         }
 
@@ -378,7 +381,7 @@ public class MobileSignalController extends SignalController<
     private int getVolteResId() {
         int resId = 0;
 
-        if ( mCurrentState.imsResitered ) {
+        if ( mCurrentState.imsResitered && mVoLTEicon ) {
             resId = R.drawable.ic_volte;
         }
         return resId;
