@@ -73,4 +73,5 @@
     <!-- Two target preference vertical divider color -->
     <color name="list_divider_dark">#64000000</color>
 
+    <color name="bootleg_accent_gradient_end_color">#00000000</color> 
 </resources>
