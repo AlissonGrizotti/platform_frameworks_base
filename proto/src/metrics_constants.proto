@@ -6486,7 +6486,7 @@ message MetricsEvent {
 
     // Add new aosp constants above this line.
     // END OF AOSP CONSTANTS
-	// Beast constant
+	// Legion constant
     BEAST = 2000;
 
   }

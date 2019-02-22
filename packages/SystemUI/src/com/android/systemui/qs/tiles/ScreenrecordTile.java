@@ -109,7 +109,7 @@ public class ScreenrecordTile extends QSTileImpl<BooleanState> {
                 return;
             }
             ComponentName cn = new ComponentName("com.android.systemui",
-                    "com.android.systemui.beast.screenrecord.TakeScreenrecordService");
+                    "com.android.systemui.legion.screenrecord.TakeScreenrecordService");
             Intent intent = new Intent();
             intent.setComponent(cn);
             ServiceConnection conn = new ServiceConnection() {

@@ -25,7 +25,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
 
-import com.android.internal.util.beast.BeastUtils;
+import com.android.internal.util.legion.LegionUtils;
 import com.android.systemui.ExpandHelper;
 import com.android.systemui.Gefingerpoken;
 import com.android.systemui.Interpolators;
@@ -80,7 +80,7 @@ public class DragDownHelper implements Gefingerpoken {
         mGoToSleep = new Runnable() {
             @Override
             public void run() {
-                BeastUtils.switchScreenOff(context);
+                LegionUtils.switchScreenOff(context);
             }
         };
     }

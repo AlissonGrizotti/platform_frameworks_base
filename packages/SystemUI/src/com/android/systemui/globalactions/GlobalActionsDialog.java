@@ -94,7 +94,7 @@ import com.android.internal.logging.MetricsLogger;
 import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
 import com.android.internal.telephony.TelephonyIntents;
 import com.android.internal.telephony.TelephonyProperties;
-import com.android.internal.util.beast.BeastUtils;
+import com.android.internal.util.legion.LegionUtils;
 import com.android.internal.util.EmergencyAffordanceManager;
 import com.android.internal.util.ScreenshotHelper;
 import com.android.internal.widget.LockPatternUtils;
@@ -110,7 +110,7 @@ import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.List;
 
-import com.android.internal.util.beast.OnTheGoActions;
+import com.android.internal.util.legion.OnTheGoActions;
 
 /**
  * Helper to show the global actions dialog.  Each item is an {@link Action} that
@@ -685,7 +685,7 @@ class GlobalActionsDialog implements DialogInterface.OnDismissListener,
             mHandler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    BeastUtils.takeScreenshot(true);
+                    LegionUtils.takeScreenshot(true);
                 }
             }, 500);
         }
@@ -696,7 +696,7 @@ class GlobalActionsDialog implements DialogInterface.OnDismissListener,
             mHandler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    BeastUtils.takeScreenshot(false);
+                    LegionUtils.takeScreenshot(false);
                 }
             }, 500);
             return true;
@@ -1045,7 +1045,7 @@ class GlobalActionsDialog implements DialogInterface.OnDismissListener,
 	
     private void startOnTheGo() {
         final ComponentName cn = new ComponentName("com.android.systemui",
-                "com.android.systemui.beast.onthego.OnTheGoService");
+                "com.android.systemui.legion.onthego.OnTheGoService");
         final Intent startIntent = new Intent();
         startIntent.setComponent(cn);
         startIntent.setAction("start");

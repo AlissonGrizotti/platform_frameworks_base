@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.android.internal.util.beast;
+package com.android.internal.util.legion;
 
 import android.util.Log;
 

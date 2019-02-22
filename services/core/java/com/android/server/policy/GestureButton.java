@@ -44,8 +44,8 @@ import android.view.WindowManagerPolicyConstants.PointerEventListener;
 import android.view.inputmethod.InputMethodManagerInternal;
 
 import com.android.internal.R;
-import com.android.internal.util.beast.BeastUtils;
-import com.android.internal.util.beast.TaskUtils;
+import com.android.internal.util.legion.BeastUtils;
+import com.android.internal.util.legion.TaskUtils;
 import com.android.server.LocalServices;
 
 public class GestureButton implements PointerEventListener {
