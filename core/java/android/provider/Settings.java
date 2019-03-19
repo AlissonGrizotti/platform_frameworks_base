@@ -4679,6 +4679,7 @@ public final class Settings {
          * @hide
          */
         public static final String ENABLE_GAMING_MODE = "enable_gaming_mode";
+	public static final String LOCKSCREEN_ALBUM_ART_FILTER = "lockscreen_album_art_filter";
 
         /**
          * Enable blocking wakelock
