@@ -157,6 +157,7 @@ import com.android.internal.util.hwkeys.PackageMonitor.PackageState;
 import com.android.systemui.statusbar.phone.Ticker;
 import com.android.systemui.statusbar.phone.TickerView;
 import com.android.internal.utils.SmartPackageMonitor;
+import com.android.internal.util.legion.ImageHelper;
 import com.android.internal.widget.LockPatternUtils;
 import com.android.internal.widget.MessagingGroup;
 import com.android.internal.widget.MessagingMessage;
@@ -420,6 +421,7 @@ public class StatusBar extends SystemUI implements DemoMode,
     protected FingerprintUnlockController mFingerprintUnlockController;
     private LightBarController mLightBarController;
     protected LockscreenWallpaper mLockscreenWallpaper;
+    private int mAlbumArtFilter;
 
     private int mNaturalBarHeight = -1;
 
@@ -1804,7 +1806,17 @@ public class StatusBar extends SystemUI implements DemoMode,
                 // might still be null
             }
             if (artworkBitmap != null) {
-                artworkDrawable = new BitmapDrawable(mBackdropBack.getResources(), artworkBitmap);
+                switch (mAlbumArtFilter) {
+                    case 1:
+                        artworkDrawable = new BitmapDrawable(mBackdropBack.getResources(), ImageHelper.toGrayscale(artworkBitmap));
+                        break;
+                    case 2:
+                        artworkDrawable = new BitmapDrawable(mBackdropBack.getResources(), ImageHelper.getBlurredImage(mContext, artworkBitmap));
+                        break;
+                    case 0:
+                    default:
+                        artworkDrawable = new BitmapDrawable(mBackdropBack.getResources(), artworkBitmap);
+                }
             }
         }
         mKeyguardShowingMedia = artworkDrawable != null;
@@ -6089,6 +6101,229 @@ public class StatusBar extends SystemUI implements DemoMode,
         return mVrMode;
     }
 
+<<<<<<< HEAD
+=======
+    private boolean mShowNavBar;
+
+    private SbSettingsObserver mSbSettingsObserver = new SbSettingsObserver(mHandler);
+    private class SbSettingsObserver extends ContentObserver {
+        SbSettingsObserver(Handler handler) {
+            super(handler);
+        }
+
+        void observe() {
+            ContentResolver resolver = mContext.getContentResolver();
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.NAVIGATION_BAR_SHOW),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.DISPLAY_CUTOUT_HIDDEN),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.NAV_BAR_INVERSE),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.THEME_DARK_STYLE),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.THEME_AUTOMATIC_TIME_IS_NIGHT),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.Secure.getUriFor(
+                    Settings.Secure.THEME_MODE),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.Secure.getUriFor(
+                    Settings.Secure.FP_SWIPE_TO_DISMISS_NOTIFICATIONS),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.LESS_BORING_HEADS_UP),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.FORCE_AMBIENT_FOR_MEDIA),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.Secure.AMBIENT_VISUALIZER_ENABLED),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.USE_OLD_MOBILETYPE),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.HEADS_UP_STOPLIST_VALUES),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.HEADS_UP_BLACKLIST_VALUES),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                  Settings.System.LOCKSCREEN_ALBUM_ART_FILTER),
+                  false, this, UserHandle.USER_ALL);
+        }
+
+        @Override
+        public void onChange(boolean selfChange, Uri uri) {
+            super.onChange(selfChange, uri);
+            if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.NAVIGATION_BAR_SHOW))) {
+                updateNavigationBar(false, false);
+            }else if (uri.equals(Settings.System.getUriFor(Settings.System.DISPLAY_CUTOUT_HIDDEN))) {
+                updateCutoutOverlay();
+            }else if (uri.equals(Settings.System.getUriFor(Settings.System.NAV_BAR_INVERSE))) {
+                reloadNavigationBar();
+            }else if (uri.equals(Settings.System.getUriFor(Settings.System.THEME_DARK_STYLE))) {
+                updateDarkThemeStyle();
+                updateTheme(true);
+            }else if (uri.equals(Settings.System.getUriFor(Settings.System.THEME_AUTOMATIC_TIME_IS_NIGHT)) ||
+                        uri.equals(Settings.Secure.getUriFor(Settings.Secure.THEME_MODE))) {
+                updateSettings();
+                updateTheme();
+            } else if (uri.equals(Settings.Secure.getUriFor(
+                    Settings.Secure.FP_SWIPE_TO_DISMISS_NOTIFICATIONS))) {
+                setFpToDismissNotifications();
+            } else if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.LESS_BORING_HEADS_UP))) {
+                setUseLessBoringHeadsUp();
+            } else if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.FORCE_AMBIENT_FOR_MEDIA))) {
+                setForceAmbient();
+            } else if (uri.equals(Settings.Secure.getUriFor(
+                    Settings.Secure.AMBIENT_VISUALIZER_ENABLED))) {
+                setAmbientVis();
+            } else if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.USE_OLD_MOBILETYPE))) {
+                setOldMobileType();
+                mCommandQueue.restartUI();
+            } else if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.LOCKSCREEN_ALBUM_ART_FILTER))) {
+                updateLockscreenFilter();
+            }
+        }
+
+        public void update() {
+            updateSettings();
+            updateNavigationBar(false, false);
+            updateCutoutOverlay();
+            updateDarkThemeStyle();
+            setFpToDismissNotifications();
+            setUseLessBoringHeadsUp();
+            setForceAmbient();
+            setAmbientVis();
+            setOldMobileType();
+            setHeadsUpStoplist();
+            setHeadsUpBlacklist();
+            updateLockscreenFilter();
+        }
+    }
+
+    private void updateSettings(){
+        mThemeMode = Settings.Secure.getInt(
+                mContext.getContentResolver(),
+                Settings.Secure.THEME_MODE, Settings.Secure.THEME_MODE_WALLPAPER);
+        mThemeAutomaticTimeIsNight = Settings.System.getInt(
+                mContext.getContentResolver(),
+                Settings.System.THEME_AUTOMATIC_TIME_IS_NIGHT, 0) != 0;
+    }
+
+    private boolean isNavbarReloading = false;
+    private void reloadNavigationBar(){
+        if (!NavbarUtils.isEnabled(mContext) || isNavbarReloading){
+            return;
+        }
+        isNavbarReloading = true;
+        updateNavigationBar(true, false);
+        mHandler.postDelayed(() -> {
+            updateNavigationBar(true, true);
+            isNavbarReloading = false;
+        }, 1000);
+    }
+
+    private void updateNavigationBar(boolean force, boolean newValue) {
+        int showNavBar = Settings.System.getIntForUser(
+                mContext.getContentResolver(), Settings.System.NAVIGATION_BAR_SHOW,
+                 -1, UserHandle.USER_CURRENT);
+        if (showNavBar != -1 || force){
+            boolean showNavBarBool = showNavBar == 1;
+            if (showNavBarBool !=  mShowNavBar || force){
+                  mShowNavBar = force ? newValue : NavbarUtils.isEnabled(mContext);
+                  if (DEBUG) Log.v(TAG, "updateNavigationBar=" + mShowNavBar);
+                  if (mShowNavBar) {
+                    if (mNavigationBarView == null) {
+                        createNavigationBar();
+                    }
+                  }else{
+                      if (mNavigationBarView != null){
+                          FragmentHostManager fm = FragmentHostManager.get(mNavigationBarView);
+                          mWindowManager.removeViewImmediate(mNavigationBarView);
+                          mNavigationBarView = null;
+                          fm.getFragmentManager().beginTransaction().remove(mNavigationBar).commit();
+                          mNavigationBar = null;
+                      }
+                  }
+           }
+        }
+    }
+
+    private void setOldMobileType() {
+        USE_OLD_MOBILETYPE = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.USE_OLD_MOBILETYPE, 0,
+                UserHandle.USER_CURRENT) != 0;
+        TelephonyIcons.updateIcons(USE_OLD_MOBILETYPE);
+    }
+
+    private void setFpToDismissNotifications() {
+        mFpDismissNotifications = Settings.Secure.getIntForUser(mContext.getContentResolver(),
+                Settings.Secure.FP_SWIPE_TO_DISMISS_NOTIFICATIONS, 0,
+                UserHandle.USER_CURRENT) == 1;
+    }
+
+    private void setUseLessBoringHeadsUp() {
+        boolean lessBoringHeadsUp = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.LESS_BORING_HEADS_UP, 1,
+                UserHandle.USER_CURRENT) == 1;
+        mEntryManager.setUseLessBoringHeadsUp(lessBoringHeadsUp);
+    }
+
+    private void setForceAmbient() {
+        mAmbientMediaPlaying = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.FORCE_AMBIENT_FOR_MEDIA, 1,
+                UserHandle.USER_CURRENT) != 0;
+        if (isAmbientContainerAvailable()) {
+            ((AmbientIndicationContainer)mAmbientIndicationContainer).setIndication(null, false);
+        }
+    }
+
+    public void setAmbientMusicInfo(String notificationText, boolean nowPlaying) {
+        if (isAmbientContainerAvailable()) {
+            ((AmbientIndicationContainer)mAmbientIndicationContainer).setIndication(
+                    notificationText, nowPlaying);
+        }
+    }
+
+    private void setAmbientVis() {
+        mAmbientVisualizer = Settings.Secure.getIntForUser(
+                mContext.getContentResolver(), Settings.Secure.AMBIENT_VISUALIZER_ENABLED, 0,
+                UserHandle.USER_CURRENT) == 1;
+    }
+
+    private void setHeadsUpStoplist() {
+        final String stopString = Settings.System.getString(mContext.getContentResolver(),
+                    Settings.System.HEADS_UP_STOPLIST_VALUES);
+        splitAndAddToArrayList(mStoplist, stopString, "\\|");
+    }
+     private void setHeadsUpBlacklist() {
+        final String blackString = Settings.System.getString(mContext.getContentResolver(),
+                    Settings.System.HEADS_UP_BLACKLIST_VALUES);
+        splitAndAddToArrayList(mBlacklist, blackString, "\\|");
+    }
+
+    private boolean isAmbientContainerAvailable() {
+        return mAmbientMediaPlaying && mAmbientIndicationContainer != null;
+    }
+
+    private void updateLockscreenFilter() {
+        mAlbumArtFilter = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.LOCKSCREEN_ALBUM_ART_FILTER, 0,
+                UserHandle.USER_CURRENT);
+      }
+
+>>>>>>> 29ccd51a597... base: Add Lockscreen cover art filter [1/2]
     private final BroadcastReceiver mBannerActionBroadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
