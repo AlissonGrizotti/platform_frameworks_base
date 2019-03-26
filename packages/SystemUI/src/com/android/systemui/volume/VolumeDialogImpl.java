@@ -282,7 +282,7 @@ public class VolumeDialogImpl implements VolumeDialog {
         mRinger = mDialog.findViewById(R.id.ringer);
         mExpandRowsView = mDialog.findViewById(R.id.expandable_indicator_container);
         mExpandRows = mDialog.findViewById(R.id.expandable_indicator);
-        if(!isAudioPanelOnLeftSide()) {
+        /*if(!isAudioPanelOnLeftSide()) {
             mRinger.setForegroundGravity(Gravity.RIGHT);
             mExpandRows.setForegroundGravity(Gravity.RIGHT);
             mExpandRows.setRotation(90);
@@ -290,7 +290,7 @@ public class VolumeDialogImpl implements VolumeDialog {
             mRinger.setForegroundGravity(Gravity.LEFT);
             mExpandRows.setForegroundGravity(Gravity.LEFT);
             mExpandRows.setRotation(-90);
-        }
+        }*/
         mRingerIcon = mRinger.findViewById(R.id.ringer_icon);
         mZenIcon = mRinger.findViewById(R.id.dnd_icon);
 
