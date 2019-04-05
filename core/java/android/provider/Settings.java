@@ -5060,6 +5060,9 @@ public final class Settings {
          * @hide
          */
         public static final String LOCKSCREEN_CLOCK_SELECTION = "lockscreen_clock_selection";
+	/** @hide */
+	public static final Validator LOCKSCREEN_CLOCK_SELECTION_VALIDATOR =
+		new SettingsValidators.InclusiveIntegerRangeValidator(0, 14);
 
         /**
          * @hide
@@ -5195,6 +5198,180 @@ public final class Settings {
 
 
         /**
+         * Whether or not to hide the network traffic indicator when there is no activity
+         * @hide
+        
+        public static final String NETWORK_TRAFFIC_AUTOHIDE = "network_traffic_autohide";
+
+       
+        private static final Validator NETWORK_TRAFFIC_AUTOHIDE_VALIDATOR =
+                BOOLEAN_VALIDATOR;
+
+        
+         * Network traffic inactivity threshold (default is 1 kBs)
+         * @hide
+         
+        public static final String NETWORK_TRAFFIC_AUTOHIDE_THRESHOLD = "network_traffic_autohide_threshold";
+
+        private static final Validator NETWORK_TRAFFIC_AUTOHIDE_THRESHOLD_VALIDATOR =
+                ANY_INTEGER_VALIDATOR;
+
+        
+         * Whether to enable DOZE only when charging
+         * @hide
+         
+        public static final String DOZE_ON_CHARGE = "doze_on_charge";
+
+        private static final Validator DOZE_ON_CHARGE_VALIDATOR =
+                BOOLEAN_VALIDATOR;
+
+        
+         * hidden stting of the current state of DOZE only when charging
+         * @hide
+         
+        public static final String DOZE_ON_CHARGE_NOW = "doze_on_charge_now";
+
+        
+         * Whether to disable showing arrows in network traffic indicators
+         * @hide
+         
+        public static final String NETWORK_TRAFFIC_HIDEARROW = "network_traffic_hidearrow";
+
+         @hide 
+        private static final Validator NETWORK_TRAFFIC_HIDEARROW_VALIDATOR =
+                BOOLEAN_VALIDATOR;
+
+        
+         * Applications list where heasdup should't show
+         *
+         * @hide
+         
+        public static final String HEADS_UP_STOPLIST_VALUES = "heads_up_stoplist_values";
+
+        
+         * Which applications to disable heads up notifications for
+         *
+         * @hide
+         
+        public static final String HEADS_UP_BLACKLIST_VALUES = "heads_up_blacklist_values";
+
+        
+         * Disable dashboard conditions in settings
+       * @hide
+         
+        public static final String ENABLE_CONDITIONS = "enable_conditions";
+
+        
+         * Disable dashboard suggestions in settings
+         * @hide
+         
+        public static final String ENABLE_SUGGESTIONS = "enable_suggestions";
+
+        
+         * Whether to enable gaming mode or not
+         *
+         * @hide
+        
+        public static final String ENABLE_GAMING_MODE = "enable_gaming_mode";
+
+        
+         * modify how the album art shows up on lockscreen
+         * 0 - default
+         * 1 - grayscale
+         * 2 - blurry
+         * @hide
+         
+        public static final String LOCKSCREEN_ALBUM_ART_FILTER = "lockscreen_album_art_filter";
+
+
+       
+         * Settings to backup. This is here so that it's in the same place as the settings
+         * keys and easy to update.
+         *
+         * NOTE: Settings are backed up and restored in the order they appear
+         *       in this array. If you have one setting depending on another,
+         *       make sure that they are ordered appropriately.
+         *
+         * @hide
+         
+        public static final String[] SETTINGS_TO_BACKUP = {
+            STAY_ON_WHILE_PLUGGED_IN,   // moved to global
+            WIFI_USE_STATIC_IP,
+            WIFI_STATIC_IP,
+            WIFI_STATIC_GATEWAY,
+            WIFI_STATIC_NETMASK,
+            WIFI_STATIC_DNS1,
+            WIFI_STATIC_DNS2,
+            BLUETOOTH_DISCOVERABILITY,
+            BLUETOOTH_DISCOVERABILITY_TIMEOUT,
+            FONT_SCALE,
+            DIM_SCREEN,
+            SCREEN_OFF_TIMEOUT,
+            SCREEN_BRIGHTNESS_MODE,
+            SCREEN_AUTO_BRIGHTNESS_ADJ,
+            SCREEN_BRIGHTNESS_FOR_VR,
+            VIBRATE_INPUT_DEVICES,
+            MODE_RINGER_STREAMS_AFFECTED,
+            TEXT_AUTO_REPLACE,
+            TEXT_AUTO_CAPS,
+            TEXT_AUTO_PUNCTUATE,
+            TEXT_SHOW_PASSWORD,
+            AUTO_TIME,                  // moved to global
+            AUTO_TIME_ZONE,             // moved to global
+            TIME_12_24,
+            DATE_FORMAT,
+            DTMF_TONE_WHEN_DIALING,
+            DTMF_TONE_TYPE_WHEN_DIALING,
+            HEARING_AID,
+            TTY_MODE,
+            MASTER_MONO,
+            SOUND_EFFECTS_ENABLED,
+            HAPTIC_FEEDBACK_ENABLED,
+            POWER_SOUNDS_ENABLED,       // moved to global
+            DOCK_SOUNDS_ENABLED,        // moved to global
+            LOCKSCREEN_SOUNDS_ENABLED,
+            SHOW_WEB_SUGGESTIONS,
+            SIP_CALL_OPTIONS,
+            SIP_RECEIVE_CALLS,
+            POINTER_SPEED,
+            VIBRATE_WHEN_RINGING,
+            RINGTONE,
+            RINGTONE2,
+            LOCK_TO_APP_ENABLED,
+            NOTIFICATION_SOUND,
+            ACCELEROMETER_ROTATION,
+            SHOW_BATTERY_PERCENT,
+            NOTIFICATION_VIBRATION_INTENSITY,
+            HAPTIC_FEEDBACK_INTENSITY,
+            DISPLAY_COLOR_MODE,
+            NOTIFICATION_LIGHT_PULSE,
+            QS_LAYOUT_ROWS,
+            QS_LAYOUT_ROWS_LANDSCAPE,
+            QS_QUICKBAR_COLUMNS,
+            STATUS_BAR_CLOCK,
+            STATUSBAR_CLOCK_STYLE,
+            STATUS_BAR_CLOCK_SECONDS,
+            STATUSBAR_CLOCK_AM_PM_STYLE,
+            STATUSBAR_CLOCK_DATE_DISPLAY,
+            STATUSBAR_CLOCK_DATE_STYLE,
+            STATUSBAR_CLOCK_DATE_FORMAT,
+            USE_OLD_MOBILETYPE,
+            STATUSBAR_HIDE_NOTCH,
+            STATUS_BAR_BRIGHTNESS_CONTROL,
+            VOLUME_KEYS_CONTROL_RING_TONE,
+            BOTTOM_GESTURE_TRIGGER_TIMEOUT,
+            BOTTOM_GESTURE_SWIPE_LIMIT,
+            DOZE_ON_CHARGE,
+        
+         * Keys we no longer back up under the current schema, but want to continue to
+         * process when restoring historical backup datasets.
+         *
+         * All settings in {@link LEGACY_RESTORE_SETTINGS} array *must* have a non-null validator,
+         * otherwise they won't be restored.
+         *
+         * @hide
+         */
+	/**
          * These are all public system settings
          *
          * @hide
