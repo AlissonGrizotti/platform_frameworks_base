@@ -5060,6 +5060,9 @@ public final class Settings {
          * @hide
          */
         public static final String LOCKSCREEN_CLOCK_SELECTION = "lockscreen_clock_selection";
+	/** @hide */
+	public static final Validator LOCKSCREEN_CLOCK_SELECTION_VALIDATOR =
+		new SettingsValidators.InclusiveIntegerRangeValidator(0, 14);
 
         /**
          * @hide
@@ -5280,7 +5283,6 @@ public final class Settings {
          */
         public static final String LOCKSCREEN_ALBUM_ART_FILTER = "lockscreen_album_art_filter";
 
-        /**End of Evolution X system settings*/
 
        /** 
          * Settings to backup. This is here so that it's in the same place as the settings
