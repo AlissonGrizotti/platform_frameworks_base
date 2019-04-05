@@ -69,12 +69,16 @@ public class BatteryMeterView extends LinearLayout implements
     private final CurrentUserTracker mUserTracker;
     private TextView mBatteryPercentView;
     private static final String FONT_FAMILY = "sans-serif-medium";
+    private String mBatteryEstimate = null;
+
     private BatteryController mBatteryController;
     private SettingObserver mSettingObserver;
     private int mTextColor;
     private int mLevel;
     private boolean mForceShowPercent;
     private boolean mShowPercentAvailable;
+    private boolean mShowEstimate;
+    private boolean mCharging;
 
     private int mDarkModeSingleToneColor;
     private int mDarkModeBackgroundColor;
@@ -100,7 +104,7 @@ public class BatteryMeterView extends LinearLayout implements
     private int mNonAdaptedSingleToneColor;
     private int mNonAdaptedForegroundColor;
     private int mNonAdaptedBackgroundColor;
-	
+
     private int mPercentageStyleId;
     private int mPercentageSize;
 
@@ -159,6 +163,7 @@ public class BatteryMeterView extends LinearLayout implements
                 getContext().getContentResolver().registerContentObserver(
                         Settings.System.getUriFor(SHOW_BATTERY_PERCENT), false, mSettingObserver,
                         newUserId);
+                updateShowPercent();
             }
         };
 
@@ -258,6 +263,7 @@ public class BatteryMeterView extends LinearLayout implements
 
         mDrawable.setBatteryLevel(level);
         mDrawable.setCharging(pluggedIn);
+        mCharging = pluggedIn;
         mLevel = level;
         updatePercentText();
         setContentDescription(
@@ -282,26 +288,108 @@ public class BatteryMeterView extends LinearLayout implements
 
     private void updatePercentText() {
         Typeface tf = Typeface.create(FONT_FAMILY, Typeface.NORMAL);
-        if (mBatteryPercentView != null) {
-
-            // Use the high voltage symbol ⚡ (u26A1 unicode) but prevent the system
-            // to load its emoji colored variant with the uFE0E flag
-            String bolt = "\u26A1\uFE0E";
-            CharSequence mChargeIndicator =
-                    mCharging && mStyle == BatteryMeterDrawableBase.BATTERY_STYLE_TEXT ? (bolt + " ") : "";
-            mBatteryPercentView.setText(mChargeIndicator +
-                    NumberFormat.getPercentInstance().format(mLevel / 100f));
+    public void setIsQuickSbHeaderOrKeyguard(boolean qs) {
+        mQsHeaderOrKeyguard = qs;
+        if (mBatteryController != null && mBatteryPercentView != null) {
+            if (!mShowEstimate || mCharging) {
+                setPercentTextAtCurrentLevel();
+            } else {
+                mBatteryController.getEstimatedTimeRemainingString(this::onEstimateFetchComplete);
+            }
         }
     }
-	
+
     private void updatePercentSize() {
         if (mPercentageSize != 0) {
             mBatteryPercentView.setTextSize(TypedValue.COMPLEX_UNIT_PX, mPercentageSize);
         }
     }
 
-    public void setIsQuickSbHeaderOrKeyguard(boolean qs) {
-        mQsHeaderOrKeyguard = qs;
+    private void onEstimateFetchComplete(String estimate) {
+        if (estimate != null) {
+            mBatteryPercentView.setText(estimate);
+        } else {
+            setPercentTextAtCurrentLevel();
+        }
+    }
+
+    private void setPercentTextAtCurrentLevel() {
+        // Use the high voltage symbol ⚡ (u26A1 unicode) but prevent the system
+        // to load its emoji colored variant with the uFE0E flag
+        String bolt = "\u26A1\uFE0E";
+        CharSequence mChargeIndicator =
+                mCharging && getMeterStyle() == BatteryMeterDrawableBase.BATTERY_STYLE_TEXT
+                ? (bolt + " ") : "";
+        mBatteryPercentView.setText(mChargeIndicator +
+                NumberFormat.getPercentInstance().format(mLevel / 100f));
+    }
+
+    private void updateShowPercent() {
+        final boolean showing = mBatteryPercentView != null;
+        int percentageStyle = Settings.System.getIntForUser(getContext().getContentResolver(),
+                SHOW_BATTERY_PERCENT, 1, mUser);
+        mShowPercent = percentageStyle;
+        boolean showAnyway = alwaysShowPercentage() || mPowerSave || mCharging || mShowEstimate;
+        if (!showAnyway
+                && getMeterStyle() == BatteryMeterDrawableBase.BATTERY_STYLE_HIDDEN) {
+            // don't show percentage
+            percentageStyle = 0;
+        }
+        if (showAnyway) percentageStyle = 1; // Default view
+        switch (percentageStyle) {
+            case 1:
+                if (!showing) {
+                    mBatteryPercentView = loadPercentView();
+                    if (mTextColor != 0) mBatteryPercentView.setTextColor(mTextColor);
+                    if (mPercentageStyleId != 0) mBatteryPercentView.setTextAppearance(mPercentageStyleId);
+                    updatePercentText();
+                    addView(mBatteryPercentView,
+                            //0,
+                            new ViewGroup.LayoutParams(
+                                    LayoutParams.WRAP_CONTENT,
+                                    LayoutParams.MATCH_PARENT));
+                }
+                mDrawable.setShowPercent(false);
+                break;
+            case 2:
+                if (showing) {
+                    removePercentageView();
+                }
+                mDrawable.setShowPercent(true);
+                break;
+            default:
+                if (showing) {
+                    removePercentageView();
+                }
+                mDrawable.setShowPercent(false);
+                break;
+        }
+
+        if (mBatteryPercentView != null) {
+            final Resources res = getContext().getResources();
+            final int startPadding = res.getDimensionPixelSize(R.dimen.battery_level_padding_start);
+            mBatteryPercentView.setPaddingRelative(
+                    getMeterStyle() == BatteryMeterDrawableBase.BATTERY_STYLE_TEXT ? 0 : startPadding,
+                    0, 0, 0);
+        }
+    }
+
+    private void createPercentView() {
+        if (mBatteryPercentView == null) {
+            mBatteryPercentView = loadPercentView();
+            if (mTextColor != 0) mBatteryPercentView.setTextColor(mTextColor);
+            updatePercentText();
+            addView(mBatteryPercentView,
+                    new ViewGroup.LayoutParams(
+                            LayoutParams.WRAP_CONTENT,
+                            LayoutParams.MATCH_PARENT));
+        }
+    }
+
+    @Override
+    public void onDensityOrFontScaleChanged() {
+        updateShowPercent();
+>>>>>>> 446cfd77857... SystemUI: Implement enhanced battery estimates in QS
     }
 
     private boolean forcePercentageQsHeader() {
@@ -431,6 +519,10 @@ public class BatteryMeterView extends LinearLayout implements
         }
     }
 
+    public void setShowEstimate(boolean showEstimate) {
+        mShowEstimate = showEstimate;
+    }
+
     private void updateBatteryStyle(String styleStr) {
 
         final int style = styleStr == null ?
@@ -469,5 +561,12 @@ public class BatteryMeterView extends LinearLayout implements
         updateShowPercent();
         updatePercentText();
         onDensityOrFontScaleChanged();
+    }
+
+    @Override
+    public void onViewAdded(View child) {
+        if (child == mBatteryPercentView) {
+            post(() -> updatePercentSize());
+        }
     }
 }
