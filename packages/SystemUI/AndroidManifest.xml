@@ -319,7 +319,7 @@
             </intent-filter>
         </receiver>
 	
-        <service android:name=".beast.screenstate.ScreenStateService"
+        <service android:name=".legion.screenstate.ScreenStateService"
                 android:exported="true" >
             <intent-filter>
                <action android:name="android.intent.action.SCREEN_STATE_SERVICE_UPDATE"/>
