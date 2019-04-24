@@ -12,6 +12,10 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
+import android.database.ContentObserver;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.UserHandle;
 import android.text.format.DateUtils;
 import android.text.format.DateFormat;
 import android.text.format.Time;
@@ -100,6 +104,9 @@ public class CustomTextClock extends TextView {
     private int handType;
     private boolean h24;
 
+    private int mClockSize = 32;
+    private SettingsObserver mSettingsObserver;
+
     private int mWallpaperColor;
 
     public CustomTextClock(Context context) {
@@ -155,6 +162,12 @@ public class CustomTextClock extends TextView {
 
         // Make sure we update to the current time
         onTimeChanged();
+	if (mSettingsObserver == null) {
+	    mSettingsObserver = new SettingsObserver(new Handler());
+	}
+	mSettingsObserver.observe();
+	updateClockSize();
+
     }
 
     @Override
@@ -266,5 +279,30 @@ public class CustomTextClock extends TextView {
             NumString = UnitsString[num];
         }
         return NumString;
+    }
+
+    public void updateClockSize() {
+	mClockSize = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.TEXT_CLOCK_FONT_SIZE, 32,
+                UserHandle.USER_CURRENT);
+            setTextSize(mClockSize);
+            onTimeChanged();
+    }
+
+    protected class SettingsObserver extends ContentObserver {
+        SettingsObserver(Handler handler) {
+            super(handler);
+        }
+
+        void observe() {
+            ContentResolver resolver = mContext.getContentResolver();
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.TEXT_CLOCK_FONT_SIZE),
+                    false, this, UserHandle.USER_ALL);
+        }
+        @Override
+        public void onChange(boolean selfChange) {
+	    updateClockSize();
+        }
     }
 }

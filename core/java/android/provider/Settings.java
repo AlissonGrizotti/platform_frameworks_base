@@ -4968,6 +4968,13 @@ public final class Settings {
          */
         public static final String LISTVIEW_INTERPOLATOR = "listview_interpolator";
 		
+	/**
+	* Change font size for the lockscreen text clock widget
+	*
+	* @hide
+	*/
+	public static final String TEXT_CLOCK_FONT_SIZE = "text_clock_font_size";
+	       
         /**
 	     ** Change fonts for the system lockscreen clock widget
 	     **
