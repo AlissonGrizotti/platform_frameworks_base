@@ -1,6 +1,5 @@
 package com.android.keyguard.clocks;
 
-import android.app.WallpaperManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.ContentResolver;
@@ -8,10 +7,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.database.ContentObserver;
 import android.os.Bundle;
 import android.os.Handler;
@@ -23,7 +19,6 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.widget.TextView;
 import android.provider.Settings;
-import android.support.v7.graphics.Palette;
 
 import com.android.systemui.R;
 
@@ -121,13 +116,6 @@ public class CustomTextClock extends TextView {
 
         handType = a.getInteger(R.styleable.CustomTextClock_HandType, 2);
 
-        WallpaperManager wmInstance = WallpaperManager.getInstance(context);
-
-        Bitmap mBitmap = ( (BitmapDrawable) wmInstance.getDrawable()).getBitmap();
-
-        Palette palette = Palette.generate(mBitmap);
-        mWallpaperColor = palette.getVibrantColor(0x000000);
-
         mCalendar = new Time();
     }
 
@@ -182,9 +170,6 @@ public class CustomTextClock extends TextView {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        if (handType == 2) {
-            setTextColor(mWallpaperColor);
-        }
     }
 
     private void onTimeChanged() {
