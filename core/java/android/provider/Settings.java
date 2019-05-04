@@ -4586,6 +4586,11 @@ public final class Settings {
         public static final String USE_EDGE_SERVICE_FOR_GESTURES = "edge_service_for_gestures";
 
         /**
+         * @hide
+         */
+        public static final String QS_HEADER_STYLE = "qs_header_style";
+
+        /**
          * whether to enable or disable vibration on succesful fingerprint auth
          *
          * @hide
@@ -5298,6 +5303,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(STATUSBAR_CLOCK_DATE_FORMAT);
             PRIVATE_SETTINGS.add(ACCELEROMETER_ROTATION_ANGLES);
             PRIVATE_SETTINGS.add(WEATHER_LOCKSCREEN_UNIT);
+            PRIVATE_SETTINGS.add(QS_HEADER_STYLE);
             PRIVATE_SETTINGS.add(SYSTEM_THEME_STYLE);
             PRIVATE_SETTINGS.add(OMNI_QS_LAYOUT_COLUMNS_LANDSCAPE);
             PRIVATE_SETTINGS.add(OMNI_QS_LAYOUT_COLUMNS);
