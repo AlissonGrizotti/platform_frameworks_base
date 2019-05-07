@@ -1837,7 +1837,7 @@ public class StatusBar extends SystemUI implements DemoMode,
             mScrimController.setHasBackdrop(hasArtwork);
         }
 
-        if ((hasArtwork || DEBUG_MEDIA_FAKE_ARTWORK)
+        if ((hasArtwork || DEBUG_MEDIA_FAKE_ARTWORK))
         if (keyguardVisible && mKeyguardShowingMedia &&
                 (artworkDrawable instanceof BitmapDrawable)) {
             // always use current backdrop to color eq
