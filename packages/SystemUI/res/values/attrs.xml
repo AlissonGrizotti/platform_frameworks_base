@@ -142,6 +142,13 @@
     <attr name="rotateButtonStartAngle" format="float" />
     <attr name="rotateButtonEndAngle" format="float" />
     <attr name="rotateButtonScaleX" format="float" />
+	
+    <!-- Used display CarrierText in Keyguard or QS Footer -->
+    <declare-styleable name="CarrierText">
+        <attr name="allCaps" format="boolean" />
+        <attr name="showMissingSim" format="boolean" />
+        <attr name="showAirplaneMode" format="boolean" />
+    </declare-styleable>
 
 </resources>
 
