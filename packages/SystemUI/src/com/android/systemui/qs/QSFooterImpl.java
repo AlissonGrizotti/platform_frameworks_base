@@ -110,9 +110,6 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
         mSettingsContainer = findViewById(R.id.settings_button_container);
         mSettingsButton.setOnClickListener(this);
 
-        mCarrierText.setDisplayFlags(
-                CarrierText.FLAG_HIDE_AIRPLANE_MODE | CarrierText.FLAG_HIDE_MISSING_SIM);
-
         mMultiUserSwitch = findViewById(R.id.multi_user_switch);
         mMultiUserAvatar = mMultiUserSwitch.findViewById(R.id.multi_user_avatar);
 
@@ -172,8 +169,6 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
     private TouchAnimator createFooterAnimator() {
         return new TouchAnimator.Builder()
                 .addFloat(mDivider, "alpha", 0, 0)
-                .addFloat(mCarrierText, "alpha", 0, 0, 1)
-                .addFloat(mMobileGroup, "alpha", 0, 1)
                 .addFloat(mActionsContainer, "alpha", 0, 1)
                 .addFloat(mDragHandle, "alpha", 1, 0, 0)
                 .addFloat(mPageIndicator, "alpha", 0, 1)

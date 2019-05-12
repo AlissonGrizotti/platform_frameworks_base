@@ -115,6 +115,12 @@ public class KeyguardUpdateMonitorCallback {
      * Called when the user change is complete.
      */
     public void onUserSwitchComplete(int userId) { }
+	
+    /**
+     * Called when the Telephony capable
+     * @param capable
+     */
+    public void onTelephonyCapable(boolean capable) { }
 
     /**
      * Called when the SIM state changes.
