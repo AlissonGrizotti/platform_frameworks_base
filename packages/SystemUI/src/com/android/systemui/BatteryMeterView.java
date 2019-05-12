@@ -105,6 +105,9 @@ public class BatteryMeterView extends LinearLayout implements
     private int mNonAdaptedSingleToneColor;
     private int mNonAdaptedForegroundColor;
     private int mNonAdaptedBackgroundColor;
+	
+    private int mPercentageStyleId;
+    private int mPercentageSize;
 
     public BatteryMeterView(Context context) {
         this(context, null, 0);
@@ -126,6 +129,8 @@ public class BatteryMeterView extends LinearLayout implements
                 defStyle, 0);
         final int frameColor = atts.getColor(R.styleable.BatteryMeterView_frameColor,
                 context.getColor(R.color.meter_background_color));
+        mPercentageStyleId = atts.getResourceId(R.styleable.BatteryMeterView_textAppearance, 0);
+        mPercentageSize = atts.getDimensionPixelSize(R.styleable.BatteryMeterView_textSize, 0);
         mFrameColor = frameColor;
         mDrawable = new ThemedBatteryDrawable(context, frameColor);
         atts.recycle();
@@ -275,8 +280,15 @@ public class BatteryMeterView extends LinearLayout implements
     private void updatePercentText() {
         Typeface tf = Typeface.create(FONT_FAMILY, Typeface.NORMAL);
         if (mBatteryPercentView != null) {
+            updatePercentSize();
             mBatteryPercentView.setText(
                     NumberFormat.getPercentInstance().format(mLevel / 100f));
+        }
+    }
+	
+    private void updatePercentSize() {
+        if (mPercentageSize != 0) {
+            mBatteryPercentView.setTextSize(TypedValue.COMPLEX_UNIT_PX, mPercentageSize);
         }
     }
 
@@ -299,6 +311,7 @@ public class BatteryMeterView extends LinearLayout implements
             if (!showing) {
                 mBatteryPercentView = loadPercentView();
                 if (mTextColor != 0) mBatteryPercentView.setTextColor(mTextColor);
+                    if (mPercentageStyleId != 0) mBatteryPercentView.setTextAppearance(mPercentageStyleId);
                 updatePercentText();
                 addView(mBatteryPercentView,
                         new ViewGroup.LayoutParams(
