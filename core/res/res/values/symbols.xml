@@ -3435,4 +3435,17 @@
     <java-symbol type="array" name="config_fontPackages" />
 
   <java-symbol type="integer" name="db_wal_truncate_size" />
+  
+  <!-- For Dual SoftaAp -->
+  <java-symbol type="array" name="config_wifi_dual_sap_interfaces" />
+  <java-symbol type="bool" name="config_wifi_dual_sap_mode_enabled" />
+
+  <!-- Gradients Shit -->
+  <java-symbol type="color" name="gradient_start_light" />
+  <java-symbol type="color" name="gradient_start_dark" />
+  <java-symbol type="color" name="gradient_end_light" />
+  <java-symbol type="color" name="gradient_end_dark" />
+  <java-symbol type="color" name="gradient_start" />
+  <java-symbol type="color" name="gradient_end" />
+
 </resources>

@@ -46,6 +46,8 @@
     <attr name="frameColor" format="color" />
     <declare-styleable name="BatteryMeterView">
         <attr name="frameColor" />
+        <attr name="textAppearance" format="reference" />
+        <attr name="textSize" format="dimension" />
     </declare-styleable>
     <declare-styleable name="Clock">
         <attr name="amPmStyle" format="enum">
@@ -142,6 +144,13 @@
     <attr name="rotateButtonStartAngle" format="float" />
     <attr name="rotateButtonEndAngle" format="float" />
     <attr name="rotateButtonScaleX" format="float" />
+	
+    <!-- Used display CarrierText in Keyguard or QS Footer -->
+    <declare-styleable name="CarrierText">
+        <attr name="allCaps" format="boolean" />
+        <attr name="showMissingSim" format="boolean" />
+        <attr name="showAirplaneMode" format="boolean" />
+    </declare-styleable>
 
 </resources>
 

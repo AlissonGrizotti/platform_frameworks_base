@@ -32,6 +32,12 @@
     <string name="wifi_security_short_psk_generic">@string/wifi_security_short_wpa_wpa2</string>
     <!-- Do not translate.  Concise terminology for wifi with 802.1x EAP security -->
     <string name="wifi_security_short_eap">802.1x</string>
+    <!-- Do not translate.  Concise terminology for wifi with DPP security -->
+    <string name="wifi_security_short_dpp">DPP</string>
+    <!-- Do not translate.  Concise terminology for wifi with SAE security -->
+    <string name="wifi_security_short_sae">SAE</string>
+    <!-- Do not translate.  Concise terminology for wifi with OWE security -->
+    <string name="wifi_security_short_owe">OWE</string>
 
     <!-- Used in Wi-Fi settings dialogs when Wi-Fi does not have any security. -->
     <string name="wifi_security_none">None</string>
@@ -50,6 +56,12 @@
     <string name="wifi_security_eap">802.1x EAP</string>
     <!-- Do not translate.  Concise terminology for Passpoint network -->
     <string name="wifi_security_passpoint">Passpoint</string>
+    <!-- Do not translate.  Concise terminology for DPP network -->
+    <string name="wifi_security_dpp">DPP</string>
+    <!-- Do not translate.  Concise terminology for SAE network -->
+    <string name="wifi_security_sae">SAE</string>
+    <!-- Do not translate.  Concise terminology for OWE network -->
+    <string name="wifi_security_owe">OWE</string>
 
     <!-- Summary for the remembered network. -->
     <string name="wifi_remembered">Saved</string>
@@ -525,6 +537,8 @@
 
     <!-- Setting Checkbox title whether to show options for wireless display certification -->
     <string name="wifi_display_certification">Wireless display certification</string>
+    <!-- Setting Checkbox title whether to enable WiFi coverage extending feature. -->
+    <string name="wifi_coverage_extend">Enable Wi\u2011Fi Coverage Extend Feature</string>
     <!-- Setting Checkbox title whether to enable WiFi Verbose Logging. [CHAR LIMIT=40] -->
     <string name="wifi_verbose_logging">Enable Wi\u2011Fi Verbose Logging</string>
     <!-- Setting Checkbox title whether to enable connected MAC randomization -->
@@ -582,6 +596,8 @@
 
     <!-- setting Checkbox summary whether to show options for wireless display certification  -->
     <string name="wifi_display_certification_summary">Show options for wireless display certification</string>
+    <!-- Setting Checkbox summary whether to enable WiFi coverage extending feature. -->
+    <string name="wifi_coverage_extend_summary">Enable extending Wi\u2011Fi coverage using Hotspot</string>
     <!-- Setting Checkbox summary whether to enable Wifi verbose Logging [CHAR LIMIT=80] -->
     <string name="wifi_verbose_logging_summary">Increase Wi\u2011Fi logging level, show per SSID RSSI in Wi\u2011Fi Picker</string>
     <!-- Setting Checkbox title whether to enable connected MAC randomization -->

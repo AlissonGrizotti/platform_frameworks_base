@@ -402,7 +402,7 @@
     <dimen name="qs_footer_padding_start">16dp</dimen>
     <dimen name="qs_footer_padding_end">16dp</dimen>
     <dimen name="qs_footer_icon_size">16dp</dimen>
-    <dimen name="qs_paged_tile_layout_padding_bottom">24dp</dimen>
+    <dimen name="qs_paged_tile_layout_padding_bottom">0dp</dimen>
 
     <dimen name="qs_notif_collapsed_space">64dp</dimen>
 
@@ -424,8 +424,8 @@
     <!-- Padding between subtitles and the following text in the QSFooter dialog -->
     <dimen name="qs_footer_dialog_subtitle_padding">20dp</dimen>
 
-    <dimen name="seek_bar_height">3dp</dimen>
-    <dimen name="seek_bar_corner_radius">3dp</dimen>
+    <dimen name="seek_bar_height">4dp</dimen>
+    <dimen name="seek_bar_corner_radius">4dp</dimen>
 
     <!-- Zen mode panel: condition item button padding -->
     <dimen name="zen_mode_condition_detail_button_padding">8dp</dimen>
@@ -589,7 +589,7 @@
     <dimen name="qs_date_time_translation">8dp</dimen>
 
     <!-- Padding before battery level text in status bar, QS, and Keyguard -->
-    <dimen name="battery_level_padding_start">4dp</dimen>
+    <dimen name="battery_level_padding_start">3dp</dimen>
 
     <!-- The top padding of the clear all button -->
     <dimen name="clear_all_padding_top">12dp</dimen>
@@ -703,7 +703,7 @@
     <dimen name="signal_cluster_margin_start">2.5dp</dimen>
 
     <!-- Padding between signal cluster and battery icon -->
-    <dimen name="signal_cluster_battery_padding">3dp</dimen>
+    <dimen name="signal_cluster_battery_padding">4dp</dimen>
 
     <!-- Padding for signal cluster and battery icon when there are not icons in signal cluster -->
     <dimen name="no_signal_cluster_battery_padding">3dp</dimen>
@@ -1021,4 +1021,11 @@
     <!-- How much we expand the touchable region of the status bar below the notch to catch touches
          that just start below the notch. -->
     <dimen name="display_cutout_touchable_region_size">12dp</dimen>
+
+    <!-- Padding for overheat alarm dialog message of content -->
+    <dimen name="alarm_dialog_panel_padding">24dp</dimen>
+
+    <!-- Padding for overheat alarm dialog message of content -->
+    <dimen name="alarm_dialog_message_space">28dp</dimen>
+
 </resources>

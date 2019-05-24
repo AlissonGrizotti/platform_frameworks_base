@@ -428,7 +428,7 @@ public class StatusBarSignalPolicy implements NetworkControllerImpl.SignalCallba
         public boolean provisioned;
         public String typeContentDescription;
         public int volteId;
-        public Context context;
+	public Context context;
 
         private MobileIconState(int subId, Context context) {
             super();

@@ -120,6 +120,9 @@ public class WifiP2pDevice implements Parcelable {
     /** @hide */
     public WifiP2pWfdInfo wfdInfo;
 
+    /** @hide */
+    public WifiWscVendorInfo wscVendorExtInfo;
+
     /** Detailed device string pattern with WFD info
      * Example:
      *  P2P-DEVICE-FOUND 00:18:6b:de:a3:6e p2p_dev_addr=00:18:6b:de:a3:6e
@@ -135,7 +138,8 @@ public class WifiP2pDevice implements Parcelable {
         "config_methods=(0x[0-9a-fA-F]+) " +
         "dev_capab=(0x[0-9a-fA-F]+) " +
         "group_capab=(0x[0-9a-fA-F]+)" +
-        "( wfd_dev_info=0x([0-9a-fA-F]{12}))?"
+        "( wfd_dev_info=0x([0-9a-fA-F]{12}))?" +
+        "( wfd_r2_dev_info=0x([0-9a-fA-F]{4}))?"
     );
 
     /** 2 token device address pattern
@@ -221,6 +225,10 @@ public class WifiP2pDevice implements Parcelable {
                     wfdInfo = new WifiP2pWfdInfo(parseHex(str.substring(0,4)),
                             parseHex(str.substring(4,8)),
                             parseHex(str.substring(8,12)));
+                    if (match.group(11) != null) {
+                        String r2str = match.group(12);
+                        wfdInfo.setWfdR2Device(parseHex(r2str.substring(0,4)));
+                    }
                 }
                 break;
         }

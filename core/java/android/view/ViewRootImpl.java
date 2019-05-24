@@ -345,6 +345,7 @@ public final class ViewRootImpl implements ViewParent,
     InputQueue mInputQueue;
     FallbackEventHandler mFallbackEventHandler;
     Choreographer mChoreographer;
+    boolean mDebugCpuRendVsync;
 
     final Rect mTempRect; // used in the transaction to not thrash the heap.
     final Rect mVisRect; // used to retrieve visible rect of focused view.
@@ -556,6 +557,8 @@ public final class ViewRootImpl implements ViewParent,
         mNoncompatDensity = context.getResources().getDisplayMetrics().noncompatDensityDpi;
         mFallbackEventHandler = new PhoneFallbackEventHandler(context);
         mChoreographer = Choreographer.getInstance();
+        mDebugCpuRendVsync = SystemProperties.getBoolean("debug.cpurend.vsync", true);
+        Log.i(TAG, "CPU Rendering VSync enable = " + mDebugCpuRendVsync);
         mDisplayManager = (DisplayManager)context.getSystemService(Context.DISPLAY_SERVICE);
 
         if (!sCompatibilityDone) {
@@ -738,6 +741,15 @@ public final class ViewRootImpl implements ViewParent,
                         // but end just in case.
                         endDragResizing();
                         mUseMTRenderer = useMTRenderer;
+                    }
+                }
+
+                if (!mDebugCpuRendVsync) {
+                    if(!mAttachInfo.mHardwareAccelerated ||
+                            mAttachInfo.mThreadedRenderer == null) {
+                        mChoreographer.setSoftwareRendering(true);
+                    } else {
+                        mChoreographer.setSoftwareRendering(false);
                     }
                 }
 
@@ -1380,10 +1392,6 @@ public final class ViewRootImpl implements ViewParent,
 
             for (int i = 0; i < mWindowStoppedCallbacks.size(); i++) {
                 mWindowStoppedCallbacks.get(i).windowStopped(stopped);
-            }
-
-            if (mStopped) {
-                mSurface.release();
             }
         }
     }
@@ -5309,6 +5317,11 @@ public final class ViewRootImpl implements ViewParent,
                 }
             }
 
+            if (event.getPointerCount() == 3 && isSwipeToScreenshotGestureActive()) {
+                event.setAction(MotionEvent.ACTION_CANCEL);
+                Log.d("teste", "canceling motionEvent because of threeGesture detecting");
+            }
+
             mAttachInfo.mUnbufferedDispatchRequested = false;
             mAttachInfo.mHandlingPointerEvent = true;
             boolean handled = mView.dispatchPointerEvent(event);
@@ -8748,6 +8761,15 @@ public final class ViewRootImpl implements ViewParent,
                 // consume anyways so that we don't feed uncaptured key events to other views
                 return true;
             }
+            return false;
+        }
+    }
+
+    private boolean isSwipeToScreenshotGestureActive() {
+        try {
+            return ActivityManager.getService().isSwipeToScreenshotGestureActive();
+        } catch (RemoteException e) {
+            Log.e("teste", "isSwipeToScreenshotGestureActive exception", e);
             return false;
         }
     }
