@@ -105,7 +105,7 @@ public class CustomTextClock extends TextView {
     private boolean h24;
 
     private int mClockSize = 32;
-    private SettingsOb
+    private SettingsObserver mSettingsObserver;
 
     private int mWallpaperColor;
 
