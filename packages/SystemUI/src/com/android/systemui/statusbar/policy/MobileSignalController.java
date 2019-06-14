@@ -93,6 +93,9 @@ public class MobileSignalController extends SignalController<
 
     private ImsManager mImsManager;
 
+    private ImsManager mImsManager;
+
+
     // TODO: Reduce number of vars passed in, if we have the NetworkController, probably don't
     // need listener lists anymore.
     public MobileSignalController(Context context, Config config, boolean hasMobileData,
