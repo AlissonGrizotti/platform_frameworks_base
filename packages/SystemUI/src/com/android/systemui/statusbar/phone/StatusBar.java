@@ -5398,6 +5398,9 @@ public class StatusBar extends SystemUI implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.LOCKSCREEN_CLOCK_SELECTION),
                     false, this, UserHandle.USER_ALL);
+	    resolver.registerContentObserver(Settings.System.getUriFor(
+		    Settings.System.LOCKSCREEN_ALBUM_ART_FILTER),
+		    false, this, UserHandle.USER_ALL);
         }
 
         @Override
@@ -5430,6 +5433,9 @@ public class StatusBar extends SystemUI implements DemoMode,
             } else if (uri.equals(Settings.System.getUriFor(
                 Settings.System.STATUS_BAR_TICKER_TICK_DURATION))) {
                 updateTickerTickDuration();
+	    } else if (uri.equals(Settings.System.getUriFor(
+	     	Settings.System.LOCKSCREEN_ALBUM_ART_FILTER))) {
+		updateLockscreenFilter();
 	    }
                 update();
     }
@@ -5444,6 +5450,7 @@ public class StatusBar extends SystemUI implements DemoMode,
 	        setPulseBlacklist();
             updateTickerAnimation();
             updateTickerTickDuration();
+	    updateLockscreenFilter();
         }
     }
 
@@ -6108,8 +6115,7 @@ public class StatusBar extends SystemUI implements DemoMode,
         return mVrMode;
     }
 
-<<<<<<< HEAD
-=======
+/**
     private boolean mShowNavBar;
 
     private SbSettingsObserver mSbSettingsObserver = new SbSettingsObserver(mHandler);
@@ -6330,7 +6336,13 @@ public class StatusBar extends SystemUI implements DemoMode,
                 UserHandle.USER_CURRENT);
       }
 
->>>>>>> 29ccd51a597... base: Add Lockscreen cover art filter [1/2]
+*/
+    private void updateLockscreenFilter() {
+	mAlbumArtFilter = Settings.System.getIntForUser(mContext.getContentResolver(),
+		Settings.System.LOCKSCREEN_ALBUM_ART_FILTER, 0,
+		UserHandle.USER_CURRENT);
+	}
+
     private final BroadcastReceiver mBannerActionBroadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
