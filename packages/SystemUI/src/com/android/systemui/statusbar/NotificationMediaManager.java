@@ -25,7 +25,6 @@ import android.media.session.PlaybackState;
 import android.os.UserHandle;
 import android.util.Log;
 
-import com.android.systemui.statusbar.phone.StatusBar;
 import com.android.systemui.Dumpable;
 import com.android.systemui.SysUiServiceProvider;
 
