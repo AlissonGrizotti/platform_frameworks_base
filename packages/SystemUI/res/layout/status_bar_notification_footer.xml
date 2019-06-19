@@ -28,13 +28,11 @@
         android:layout_height="wrap_content" >
         <com.android.systemui.statusbar.FooterViewButton
             style="@android:style/Widget.Material.Button.Borderless"
-            android:id="@+id/dismiss_text"
+            android:id="@+id/dismiss_cross"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:focusable="true"
-            android:contentDescription="@string/accessibility_clear_all"
-            android:text="@string/clear_all_notifications_text"
-            android:textColor="?attr/wallpaperTextColor"/>
+	    android:background="@drawable/clear_notif" />
     </com.android.systemui.statusbar.AlphaOptimizedFrameLayout>
 </com.android.systemui.statusbar.FooterView>
