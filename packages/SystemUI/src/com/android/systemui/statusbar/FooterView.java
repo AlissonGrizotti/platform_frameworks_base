@@ -42,7 +42,7 @@ public class FooterView extends StackScrollerDecorView {
     }
 
     protected View findSecondaryView() {
-        return findViewById(R.id.dismiss_text);
+        return findViewById(R.id.dismiss_cross);
     }
 
     @Override
