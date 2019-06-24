@@ -330,9 +330,8 @@ public class BatteryMeterView extends LinearLayout implements
             }
         }
         if (mBatteryPercentView != null) {
-            mBatteryPercentView.setPaddingRelative(
-                    mStyle == BatteryMeterDrawableBase.BATTERY_STYLE_TEXT ? 0 : mEndPadding,
-		    0, 0, 0);
+            mBatteryPercentView.setPaddingRelative(0, 0,
+                    mStyle == BatteryMeterDrawableBase.BATTERY_STYLE_TEXT ? 0 : mEndPadding, 0);
         }
         mDrawable.showPercentInsideCircle(mShowPercentText == 2);
         mDrawable.setShowPercent(mShowPercentText == 2);
