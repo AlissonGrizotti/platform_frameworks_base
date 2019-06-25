@@ -29,12 +29,12 @@
         <com.android.systemui.statusbar.FooterViewButton
             style="@android:style/Widget.Material.Button.Borderless"
             android:id="@+id/dismiss_cross"
-            android:layout_height="40dp
+	    android:layout_centerHorizontal="true" 
+    	    android:layout_alignParentBottom="true"
+	    android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_gravity="center"
             android:focusable="true"
-	    android:background="@drawable/clear_notif"
-	    android:layout_centerHorizontal="true"
-	    android:layout_alignParentBottom="true"
-	    android:layout_width="40dp"
+	    android:background="@drawable/clear_notif" />
     </com.android.systemui.statusbar.AlphaOptimizedFrameLayout>
 </com.android.systemui.statusbar.FooterView>
