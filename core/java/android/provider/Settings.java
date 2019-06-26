@@ -5091,18 +5091,6 @@ public final class Settings {
         public static final String SCREEN_STATE_ON_DELAY = "screen_state_on_delay";
 
         /**
-         *  Weather to use a custom color for the visualizer on the lock screen
-         * @hide
-         */
-        public static final String LOCK_SCREEN_VISUALIZER_USE_CUSTOM_COLOR = "lock_screen_visualizer_use_custom_color";
-
-        /**
-         *  Custom color of the visualizer on the lock screen
-         * @hide
-         */
-        public static final String LOCK_SCREEN_VISUALIZER_CUSTOM_COLOR = "lock_screen_visualizer_custom_color";
-
-        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
@@ -9757,12 +9745,13 @@ public final class Settings {
          * @hide
          */
         public static final String PULSE_APPS_BLACKLIST = "pulse_apps_blacklist";
-
+		
         /**
-         * Whether to show the brightness slider in quick settings panel
+         * Lockscreen Visualizer
+         *
          * @hide
          */
-        public static final String LOCKSCREEN_VISUALIZER_ENABLED = "lockscreen_visualizer_enabled";
+        public static final String LOCKSCREEN_VISUALIZER_ENABLED = "lockscreen_visualizer";
 
         /**
          * This are the settings to be backed up.

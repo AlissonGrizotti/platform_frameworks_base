@@ -85,7 +85,6 @@ import android.graphics.drawable.Drawable;
 import android.media.AudioAttributes;
 import android.media.MediaMetadata;
 import android.media.session.MediaController;
-import android.media.session.PlaybackState;
 import android.metrics.LogMaker;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -592,10 +591,10 @@ public class StatusBar extends SystemUI implements DemoMode,
     protected NotificationLockscreenUserManager mLockscreenUserManager;
     protected NotificationRemoteInputManager mRemoteInputManager;
 
-    private boolean mWallpaperSupportsAmbientMode;
     private VisualizerView mVisualizerView;
     private boolean mScreenOn;
     private boolean mKeyguardShowingMedia;
+    private boolean mWallpaperSupportsAmbientMode;
 
     private BroadcastReceiver mWallpaperChangedReceiver = new BroadcastReceiver() {
         @Override
@@ -735,6 +734,7 @@ public class StatusBar extends SystemUI implements DemoMode,
         mLockscreenUserManager = Dependency.get(NotificationLockscreenUserManager.class);
         mGutsManager = Dependency.get(NotificationGutsManager.class);
         mMediaManager = Dependency.get(NotificationMediaManager.class);
+        mMediaManager.addCallback(this);
         mEntryManager = Dependency.get(NotificationEntryManager.class);
         mEntryManager.setStatusBar(this);
         mViewHierarchyManager = Dependency.get(NotificationViewHierarchyManager.class);
@@ -1767,6 +1767,10 @@ public class StatusBar extends SystemUI implements DemoMode,
     @Override
     public void updateMediaMetaData(boolean metaDataChanged, boolean allowEnterAnimation) {
         Trace.beginSection("StatusBar#updateMediaMetaData");
+
+        // ensure visualizer is visible regardless of artwork
+        mMediaManager.setMediaPlaying();
+
         if (!SHOW_LOCKSCREEN_MEDIA_ARTWORK) {
             Trace.endSection();
             return;
@@ -1849,22 +1853,13 @@ public class StatusBar extends SystemUI implements DemoMode,
             mScrimController.setHasBackdrop(hasArtwork);
         }
 
-        if ((hasArtwork || DEBUG_MEDIA_FAKE_ARTWORK))
-        if (!mKeyguardFadingAway && keyguardVisible && hasArtwork && mScreenOn) {
-            // if there's album art, ensure visualizer is visible
-            mVisualizerView.setPlaying(mMediaManager.getMediaController() != null
-                    && mMediaManager.getMediaController().getPlaybackState() != null
-                    && mMediaManager.getMediaController().getPlaybackState().getState()
-                            == PlaybackState.STATE_PLAYING);
-        }
-
         if (keyguardVisible && mKeyguardShowingMedia &&
                 (artworkDrawable instanceof BitmapDrawable)) {
             // always use current backdrop to color eq
             mVisualizerView.setBitmap(((BitmapDrawable)artworkDrawable).getBitmap());
         }
 
-        if ((hasArtwork || DEBUG_MEDIA_FAKE_ARTWORK) && !mDozing
+        if ((hasArtwork || DEBUG_MEDIA_FAKE_ARTWORK)
                 && (mState != StatusBarState.SHADE || allowWhenShade)
                 && mFingerprintUnlockController.getMode()
                         != FingerprintUnlockController.MODE_WAKE_AND_UNLOCK_PULSING
