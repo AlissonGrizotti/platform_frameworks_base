@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2019 Traduzido por AlissonGrizotti
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+          http://www.apache.org/licenses/LICENSE-2.0
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+
+<!-- Formatting note: terminate all comments with a period, to avoid breaking
+     the documentation output. To suppress comment lines from the documentation
+     output, insert an eat-comment element after the comment lines.
+-->
+
+<resources>
+    <string-array name="type_clock_hours">
+        <item>Doze</item>
+        <item>Uma</item>
+        <item>Duas</item>
+        <item>Três</item>
+        <item>Quatro</item>
+        <item>Cinco</item>
+        <item>Seis</item>
+        <item>Sete</item>
+        <item>Oito</item>
+        <item>Nove</item>
+        <item>Dez</item>
+        <item>Onze</item>
+    </string-array>
+    <string-array name="type_clock_minutes">
+        <item>Horas</item>
+        <item>E Um</item>
+        <item>E Dois</item>
+        <item>E Três</item>
+        <item>E Quatro</item>
+        <item>E Cinco</item>
+        <item>E Seis</item>
+        <item>E Sete</item>
+        <item>E Oito</item>
+        <item>E Nove</item>
+        <item>E Dez</item>
+        <item>E Onze</item>
+        <item>E Doze</item>
+        <item>E Treze</item>
+        <item>E Quatorze</item>
+        <item>E Quinze</item>
+        <item>E Dezesseis</item>
+        <item>E Dezessete</item>
+        <item>E Dezoito</item>
+        <item>E Dezenove</item>
+        <item>E Vinte</item>
+        <item>"E Vinte e Um"</item>
+        <item>"E Vinte e Dois"</item>
+        <item>"E Vinte e Três"</item>
+        <item>"E Vinte e Quatro"</item>
+        <item>"E Vinte e Cinco"</item>
+        <item>"E Vinte e Seis"</item>
+        <item>"E Vinte e Sete"</item>
+        <item>"E Vinte e Oito"</item>
+        <item>"E Vinte e Nove"</item>
+        <item>E Trinta</item>
+        <item>"E Trinta e Um"</item>
+        <item>"E Trinta e Dois"</item>
+        <item>"E Trinta e Três"</item>
+        <item>"E Trinta e Quatro"</item>
+        <item>"E Trinta e Cinco"</item>
+        <item>"E Trinta e Seis"</item>
+        <item>"E Trinta e Sete"</item>
+        <item>"E Trinta e Oito"</item>
+        <item>"E Trinta e Nove"</item>
+        <item>E Quarenta</item>
+        <item>"E Quarenta e Um"</item>
+        <item>"E Quarenta e Dois"</item>
+        <item>"E Quarenta e Três"</item>
+        <item>"E Quarenta e Quatro"</item>
+        <item>"E Quarenta e Cinco"</item>
+        <item>"E Quarenta e Seis"</item>
+        <item>"E Quarenta e Sete"</item>
+        <item>"E Quarenta e Oito"</item>
+        <item>"E Quarenta e Nove"</item>
+        <item>E Cinquenta</item>
+        <item>"E Cinquenta e Um"</item>
+        <item>"E Cinquenta e Dois"</item>
+        <item>"E Cinquenta e Três"</item>
+        <item>"E Cinquenta e Quatro"</item>
+        <item>"E Cinquenta e Cinco"</item>
+        <item>"E Cinquenta e Seis"</item>
+        <item>"E Cinquenta e Sete"</item>
+        <item>"E Cinquenta e Oito"</item>
+        <item>"E Cinquenta e Nove"</item>
+    </string-array>
+</resources>
